@@ -1,0 +1,19 @@
+{
+  "min_edge": 0.03,
+  "window_hours": 3,
+  "min_poll_gap_minutes": 30,
+  "schedule_refresh_hours": 6,
+  "monthly_credit_cap": 450,
+  "reserve_credits": 20,
+  "form_fields": {
+    "date": "entry.736543385",
+    "match": "entry.1238174469",
+    "league": "entry.1081487628",
+    "market": "entry.507232252",
+    "bet_type": "entry.974126185",
+    "odds": "entry.902227281",
+    "stake": "entry.1566288549",
+    "bookmaker": "entry.1094654911",
+    "source": "entry.1056838399"
+  }
+}

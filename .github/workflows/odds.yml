@@ -1,0 +1,32 @@
+name: odds-logger
+on:
+  schedule:
+    - cron: "*/15 8-19 * * 0,6"   # weekends (UTC)
+    - cron: "*/15 15-20 * * 1-5"  # weekday evenings (UTC)
+  workflow_dispatch:
+    inputs:
+      test_form:
+        description: "Send one TEST row to the form and exit"
+        type: boolean
+        default: false
+concurrency: odds-logger
+permissions:
+  contents: write
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python logger.py ${{ inputs.test_form && '--test-form' || '' }}
+        env:
+          ODDS_API_KEY: ${{ secrets.ODDS_API_KEY }}
+          FORM_URL: ${{ secrets.FORM_URL }}
+      - name: Persist state
+        run: |
+          git config user.name "odds-bot"
+          git config user.email "bot@users.noreply.github.com"
+          git add -A
+          git diff --cached --quiet || (git commit -m "state" && git push)
