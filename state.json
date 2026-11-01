@@ -56,11 +56,30 @@
  ],
  "events_at": "2026-11-01T10:30:34.498215+00:00",
  "month": "2026-11",
- "calls": 5,
- "last_poll": "2026-11-01T15:30:35.687619+00:00",
- "remaining": 490,
- "bets": [],
+ "calls": 6,
+ "last_poll": "2026-11-01T16:00:43.845938+00:00",
+ "remaining": 488,
+ "bets": [
+  {
+   "key": "6a3819cdbe2ba2fe5a3d8f9b4b459965|1X2 Draw|lean",
+   "type": "lean",
+   "logged_at": "2026-11-01T16:00:43.845938+00:00",
+   "match": "Liverpool - Arsenal",
+   "kickoff": "2026-11-01T16:30:00Z",
+   "market": "1X2 Draw",
+   "open_nordic_odds": 3.4,
+   "open_pinnacle_odds": 3.44,
+   "open_fair_prob": 0.28334,
+   "open_edge": -0.03663,
+   "close_time": "2026-11-01T16:00:43.845938+00:00",
+   "close_nordic_odds": 3.4,
+   "close_pinnacle_odds": 3.44,
+   "close_fair_prob": 0.28334,
+   "close_edge": -0.03663
+  }
+ ],
  "sent": [
-  "digest|2026-11-01T16:30:00Z"
+  "digest|2026-11-01T16:30:00Z",
+  "lean|6a3819cdbe2ba2fe5a3d8f9b4b459965"
  ]
 }

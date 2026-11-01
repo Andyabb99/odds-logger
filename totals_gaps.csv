@@ -1,0 +1,5 @@
+time,event_id,match,kickoff,mins_to_kickoff,missing,book,point,outcome,price
+2026-11-01T16:00:43.845938+00:00,6a3819cdbe2ba2fe5a3d8f9b4b459965,Liverpool - Arsenal,2026-11-01T16:30:00Z,29,pinnacle,pinnacle,2.75,Over,2.04
+2026-11-01T16:00:43.845938+00:00,6a3819cdbe2ba2fe5a3d8f9b4b459965,Liverpool - Arsenal,2026-11-01T16:30:00Z,29,pinnacle,pinnacle,2.75,Under,1.87
+2026-11-01T16:00:43.845938+00:00,6a3819cdbe2ba2fe5a3d8f9b4b459965,Liverpool - Arsenal,2026-11-01T16:30:00Z,29,pinnacle,nordicbet,2.5,Over,1.75
+2026-11-01T16:00:43.845938+00:00,6a3819cdbe2ba2fe5a3d8f9b4b459965,Liverpool - Arsenal,2026-11-01T16:30:00Z,29,pinnacle,nordicbet,2.5,Under,2.08
