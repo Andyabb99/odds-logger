@@ -166,12 +166,17 @@ function prepFixture_(m) {
 
 /** Returns W/L for supported markets, null otherwise. */
 function settle_(market, h, a) {
-  switch (String(market).trim().toLowerCase().replace(/\s+/g, ' ')) {
+  var m = String(market).trim().toLowerCase().replace(/\s+/g, ' ');
+  switch (m) {
     case '1x2 home': return h > a ? 'W' : 'L';
     case '1x2 draw': return h === a ? 'W' : 'L';
     case '1x2 away': return a > h ? 'W' : 'L';
-    case 'over 2.5': return h + a > 2.5 ? 'W' : 'L';
-    case 'under 2.5': return h + a < 2.5 ? 'W' : 'L';
+  }
+  var t = /^(over|under) (\d+(?:\.\d+)?)$/.exec(m);  // any line: "Over 1.5", "Under 3.5", ...
+  if (t) {
+    var line = parseFloat(t[2]), goals = h + a;
+    if (goals === line) return 'P';  // whole-number line landing exactly = push (same code as cancelled)
+    return (t[1] === 'over' ? goals > line : goals < line) ? 'W' : 'L';
   }
   return null;
 }
