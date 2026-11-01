@@ -56,7 +56,12 @@ def label(event, key, outcome, point):
 def all_rows(event):
     """Every outcome Pinnacle prices fully, with NordicBet odds/edge where available."""
     rows = []
-    for key, point, n in (("h2h", None, 3), ("totals", 2.5, 2)):
+    # Totals: 2.5 always, plus any other whole/half line (1.5, 3.5, ...) that NordicBet also prices.
+    # The API returns every listed line for the same credits. Quarter lines are skipped (half-push).
+    lines = {o.get("point") for b in event.get("bookmakers", []) if b["key"] == "nordicbet"
+             for m in b["markets"] if m["key"] == "totals" for o in m["outcomes"]}
+    pts = [2.5] + sorted(p for p in lines if p is not None and p != 2.5 and (p * 2) % 1 == 0)
+    for key, point, n in (("h2h", None, 3),) + tuple(("totals", p, 2) for p in pts):
         pin = market_prices(event, "pinnacle", key, point)
         nor = market_prices(event, "nordicbet", key, point)
         if len(pin) != n:
