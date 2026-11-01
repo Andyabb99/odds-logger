@@ -1,5 +1,5 @@
 """Paper-only value-bet logger. Never places bets; only logs to a Google Form."""
-import csv, json, os, sys, urllib.parse, urllib.request
+import csv, html, json, os, sys, urllib.error, urllib.parse, urllib.request
 from datetime import datetime, timedelta, timezone
 
 API = "https://api.the-odds-api.com/v4/sports"
@@ -81,7 +81,7 @@ def local_date(kickoff):
         return parse_t(kickoff).strftime("%Y-%m-%d")
 
 
-def post_form(home, away, kickoff, market, odds, test=False):
+def post_form(home, away, kickoff, market, odds, test=False, source="Model (paper)"):
     url = os.environ["FORM_URL"]  # .../formResponse
     f = CFG["form_fields"]
     data = {
@@ -95,7 +95,7 @@ def post_form(home, away, kickoff, market, odds, test=False):
         f["odds"]: f"{odds:.2f}",
         f["stake"]: "1",
         f["bookmaker"]: "NordicBet",
-        f["source"]: "Model (paper)",
+        f["source"]: source,
     }
     req = urllib.request.Request(url, urllib.parse.urlencode(data).encode(), method="POST")
     with urllib.request.urlopen(req, timeout=30) as r:
@@ -107,7 +107,166 @@ SNAP_COLS = ["time", "event_id", "match", "kickoff", "mins_to_kickoff", "market"
              "nordic_odds", "pinnacle_odds", "fair_prob", "edge"]
 BET_COLS = ["key", "logged_at", "match", "kickoff", "market", "open_nordic_odds", "open_pinnacle_odds",
             "open_fair_prob", "open_edge", "close_time", "close_nordic_odds", "close_pinnacle_odds",
-            "close_fair_prob", "close_edge"]
+            "close_fair_prob", "close_edge", "type"]
+
+
+# ---------- Telegram digest / alerts ----------
+TG_LIMIT = 3800  # Telegram caps messages at 4096 chars
+
+
+def tg_send(text, attempts=2):
+    token, chat = os.environ.get("TELEGRAM_BOT_TOKEN"), os.environ.get("TELEGRAM_CHAT_ID")
+    if not token or not chat:
+        print("Telegram not configured (TELEGRAM_BOT_TOKEN / TELEGRAM_CHAT_ID); skipping.")
+        return False
+    data = urllib.parse.urlencode(dict(chat_id=chat, text=text, parse_mode="HTML",
+                                       disable_web_page_preview="true")).encode()
+    for _ in range(attempts):
+        try:
+            with urllib.request.urlopen(f"https://api.telegram.org/bot{token}/sendMessage", data, timeout=30) as r:
+                return r.status < 400
+        except urllib.error.HTTPError as e:  # never print the URL: it contains the bot token
+            print("Telegram send failed:", e.code, e.read().decode(errors="replace")[:200])
+        except Exception as e:
+            print("Telegram send failed:", type(e).__name__)
+    return False
+
+
+def notify(text, dry):
+    if dry:
+        print("[telegram dry-run]\n" + text)
+        return True
+    return tg_send(text)
+
+
+def helsinki(dt):
+    try:
+        from zoneinfo import ZoneInfo
+        return dt.astimezone(ZoneInfo("Europe/Helsinki"))
+    except Exception:  # no tz database: EEST from last Sun Mar 01:00 UTC to last Sun Oct 01:00 UTC
+        def last_sun(m):
+            d = datetime(dt.year, m, 31, 1, tzinfo=timezone.utc)
+            return d - timedelta(days=(d.weekday() + 1) % 7)
+        return dt.astimezone(timezone(timedelta(hours=3 if last_sun(3) <= dt < last_sun(10) else 2)))
+
+
+def hhmm(kickoff):
+    return helsinki(parse_t(kickoff)).strftime("%H:%M")
+
+
+def short(market):
+    return {"1X2 Home": "H", "1X2 Draw": "D", "1X2 Away": "A"}.get(market) or \
+        market.replace("Over ", "O").replace("Under ", "U")
+
+
+def first_odds_today(day):
+    """{(event_id, market): first NordicBet odds seen on this Helsinki day} from snapshots.csv."""
+    out = {}
+    if os.path.exists(SNAP_FILE):
+        for r in csv.DictReader(open(SNAP_FILE, newline="")):
+            if r["nordic_odds"] and local_date(r["time"]) == day:
+                out.setdefault((r["event_id"], r["market"]), float(r["nordic_odds"]))
+    return out
+
+
+def arrow(odds, first):
+    if first is None or abs(odds - first) < 0.005:
+        return ""
+    return f" {'▲' if odds > first else '▼'}{abs(odds - first):.2f}"
+
+
+def match_block(m, first):
+    """m: dict(id, name, kickoff, rows). Star = best edge (diamond if even the best is negative)."""
+    rows = m["rows"]
+    fair = " · ".join(f"{short(r['market'])} {r['fair_prob'] * 100:.0f}%" for r in rows)
+    best = max((r for r in rows if r["nordic_odds"]), key=lambda r: r["edge"], default=None)
+    out = [f"<b>{html.escape(m['name'])}</b> · {hhmm(m['kickoff'])}", f"Pinnacle fair: {fair}"]
+    for r in rows:
+        name = r["market"].replace("1X2 ", "")
+        fo = f"{1 / r['fair_prob']:.2f}"
+        if not r["nordic_odds"]:
+            out.append(f"▫️ {name}: no NordicBet price · fair {fo}")
+            continue
+        body = (f"{name} {r['nordic_odds']:.2f} · fair {fo} · {r['edge'] * 100:+.1f}%"
+                f"{arrow(r['nordic_odds'], first.get((m['id'], r['market'])))}")
+        if r is best:
+            out.append(f"{'⭐' if r['edge'] >= 0 else '🔹'} <b>{body}</b>")
+        else:
+            out.append(f"▫️ {body}")
+    return "\n".join(out)
+
+
+def parlay_text(matches):
+    """Best leg per match with edge >= 0 (legs from one match are mutually exclusive or correlated)."""
+    legs = []
+    for m in matches:
+        ok = [r for r in m["rows"] if r["edge"] is not None and r["edge"] >= 0]
+        if ok:
+            legs.append((m, max(ok, key=lambda r: r["edge"])))
+    if not legs:
+        return "no qualifying legs"
+    if len(legs) == 1:
+        return "only 1 qualifying leg - no parlay"
+    odds = prob = 1.0
+    for _, r in legs:
+        odds *= r["nordic_odds"]
+        prob *= r["fair_prob"]
+    lines = [f"• {html.escape(m['name'])}: {r['market'].replace('1X2 ', '')} @{r['nordic_odds']:.2f} "
+             f"({r['edge'] * 100:+.1f}%)" for m, r in legs]
+    lines.append(f"Combined @{odds:.2f} · fair {1 / prob:.2f} · <b>edge {(odds * prob - 1) * 100:+.1f}%</b>")
+    return "\n".join(lines)
+
+
+def build_digest(matches, first, min_edge, title):
+    """Messages for one kickoff slot (split on match boundaries if too long)."""
+    vb = [f"• {html.escape(m['name'])}: {r['market'].replace('1X2 ', '')} @{r['nordic_odds']:.2f} "
+          f"(fair {1 / r['fair_prob']:.2f}, <b>{r['edge'] * 100:+.1f}%</b>)"
+          for m in matches for r in m["rows"] if r["edge"] is not None and r["edge"] >= min_edge]
+    tail = (f"<b>Value bets ({min_edge * 100:.0f}%+)</b>\n" + ("\n".join(vb) if vb else "none") +
+            f"\n\n<b>Value-only parlay</b> (best leg per match, edge ≥ 0)\n{parlay_text(matches)}")
+    msgs, cur = [], title
+    for b in [match_block(m, first) for m in matches] + [tail]:
+        if len(cur) + len(b) + 2 > TG_LIMIT and cur != title:
+            msgs.append(cur)
+            cur = title + " (cont.)"
+        cur += "\n\n" + b
+    return msgs + [cur]
+
+
+def alert_text(m, r, mins):
+    return (f"🚨 <b>Value bet</b> · {html.escape(m['name'])}\n"
+            f"{r['market']} · NordicBet <b>{r['nordic_odds']:.2f}</b> · fair {1 / r['fair_prob']:.2f} · "
+            f"edge <b>{r['edge'] * 100:+.1f}%</b>\n"
+            f"Kickoff in {mins} min ({hhmm(m['kickoff'])})\n"
+            f"Only bet if the odds are still this or better.")
+
+
+def send_test_digest(dry=False):
+    """Sample digest from the latest poll in snapshots.csv. Touches neither the form nor state.json."""
+    if not os.path.exists(SNAP_FILE):
+        sys.exit("snapshots.csv not found")
+    rows = list(csv.DictReader(open(SNAP_FILE, newline="")))
+    last = rows[-1]["time"]
+    by_ev = {}
+    for r in rows:
+        if r["time"] == last:
+            m = by_ev.setdefault(r["event_id"], dict(id=r["event_id"], name=r["match"],
+                                                     kickoff=r["kickoff"], rows=[]))
+            m["rows"].append(dict(market=r["market"], fair_prob=float(r["fair_prob"]),
+                                  nordic_odds=float(r["nordic_odds"]) if r["nordic_odds"] else None,
+                                  edge=float(r["edge"]) if r["edge"] else None))
+    slots = {}
+    for m in by_ev.values():
+        slots.setdefault(m["kickoff"], []).append(m)
+    first = first_odds_today(local_date(last))
+    sent = 0
+    for ko, ms in sorted(slots.items())[:3]:
+        title = (f"🧪 <b>TEST digest</b> · KO {hhmm(ko)} (Helsinki)\n"
+                 f"sample from snapshot {helsinki(parse_t(last)):%d.%m. %H:%M}")
+        for text in build_digest(ms, first, CFG["min_edge"], title):
+            sent += notify(text, dry)
+    print(f"TEST telegram: {sent} message(s) sent")
+    return sent > 0
 
 
 def append_snap(rows):
@@ -123,7 +282,7 @@ def write_bets(bets):
     with open(BETS_FILE, "w", newline="") as f:
         w = csv.DictWriter(f, BET_COLS, extrasaction="ignore")
         w.writeheader()
-        w.writerows(bets)
+        w.writerows({"type": "value", **b} for b in bets)
 
 
 def load_state():
@@ -143,6 +302,7 @@ def main():
     dry = os.environ.get("DRY_RUN") == "1"
     st = load_state()
     st.setdefault("bets", [])
+    st.setdefault("sent", [])  # alert|<key>, lean|<event>, digest|<kickoff>: never repeat these
     t = now()
     month = t.strftime("%Y-%m")
     if st["month"] != month:
@@ -176,20 +336,24 @@ def main():
     st["remaining"] = int(float(rem)) if rem is not None else st["remaining"]
     print(f"credits remaining: {st['remaining']}")
 
-    snaps = []
+    snaps, matches = [], []
+    first = first_odds_today(local_date(t.isoformat()))  # first NordicBet odds per match/market today
     for ev in odds:
         mins = round((parse_t(ev["commence_time"]) - t).total_seconds() / 60)
         name = f"{ev['home_team']} - {ev['away_team']}"
-        for r in all_rows(ev):
+        rows = all_rows(ev)
+        m = dict(id=ev["id"], name=name, kickoff=ev["commence_time"], rows=rows)
+        matches.append(m)
+        for r in rows:
             key = f"{ev['id']}|{r['market']}"
             edge = None if r["edge"] is None else round(r["edge"], 5)
             snaps.append(dict(time=t.isoformat(), event_id=ev["id"], kickoff=ev["commence_time"],
                               match=name, mins_to_kickoff=mins, market=r["market"],
                               nordic_odds=r["nordic_odds"], pinnacle_odds=r["pinnacle_odds"],
                               fair_prob=round(r["fair_prob"], 5), edge=edge))
-            # logged bets keep their closing odds updated; the last pre-kickoff snapshot wins
+            # logged bets (value and lean) keep their closing odds updated; the last pre-kickoff snapshot wins
             for bet in st["bets"]:
-                if bet["key"] == key:
+                if bet["key"].removesuffix("|lean") == key:
                     bet.update(close_time=t.isoformat(), close_nordic_odds=r["nordic_odds"],
                                close_pinnacle_odds=r["pinnacle_odds"],
                                close_fair_prob=round(r["fair_prob"], 5), close_edge=edge)
@@ -199,13 +363,60 @@ def main():
             if dry or post_form(ev["home_team"], ev["away_team"], ev["commence_time"],
                                 r["market"], r["nordic_odds"]):
                 st["logged"].append(key)  # mark only after a successful log
-                st["bets"].append(dict(key=key, logged_at=t.isoformat(), match=name,
+                st["bets"].append(dict(key=key, type="value", logged_at=t.isoformat(), match=name,
                                        kickoff=ev["commence_time"], market=r["market"],
                                        open_nordic_odds=r["nordic_odds"],
                                        open_pinnacle_odds=r["pinnacle_odds"],
                                        open_fair_prob=round(r["fair_prob"], 5), open_edge=edge))
+                save(st, dry)  # persist right after the POST so a later crash can't cause a re-log
+                if f"alert|{key}" not in st["sent"] and notify(alert_text(m, r, mins), dry):
+                    st["sent"].append(f"alert|{key}")
+                    save(st, dry)
             else:
                 print("Form POST failed; will retry next run.")
+
+        # lean bet: first poll within lean_minutes of kickoff (polls are >= min_poll_gap apart, so it is the last)
+        lean_key = f"lean|{ev['id']}"
+        secs = (parse_t(ev["commence_time"]) - t).total_seconds()
+        cands = [r for r in rows if r["edge"] is not None]
+        if cands and secs <= CFG["lean_minutes"] * 60 and lean_key not in st["sent"]:
+            best = max(cands, key=lambda r: r["edge"])
+            key = f"{ev['id']}|{best['market']}"
+            if key in st["logged"]:
+                print("Lean skipped (already logged as value bet):", key)
+                st["sent"].append(lean_key)
+            else:
+                print("LEAN BET:", key, best)
+                if dry or post_form(ev["home_team"], ev["away_team"], ev["commence_time"],
+                                    best["market"], best["nordic_odds"], source="Model (lean)"):
+                    st["sent"].append(lean_key)
+                    edge = round(best["edge"], 5)
+                    st["bets"].append(dict(key=key + "|lean", type="lean", logged_at=t.isoformat(), match=name,
+                                           kickoff=ev["commence_time"], market=best["market"],
+                                           open_nordic_odds=best["nordic_odds"],
+                                           open_pinnacle_odds=best["pinnacle_odds"],
+                                           open_fair_prob=round(best["fair_prob"], 5), open_edge=edge,
+                                           close_time=t.isoformat(), close_nordic_odds=best["nordic_odds"],
+                                           close_pinnacle_odds=best["pinnacle_odds"],
+                                           close_fair_prob=round(best["fair_prob"], 5), close_edge=edge))
+                else:
+                    print("Lean form POST failed; will retry next run.")
+            save(st, dry)
+
+    # digest: one message per kickoff slot, on the first poll 45-75 min before kickoff
+    lo, hi = CFG["digest_window_minutes"]
+    slots = {}
+    for m in matches:
+        secs = (parse_t(m["kickoff"]) - t).total_seconds()
+        if lo * 60 <= secs <= hi * 60 and m["rows"] and f"digest|{m['kickoff']}" not in st["sent"]:
+            slots.setdefault(m["kickoff"], []).append(m)
+    for ko, ms in sorted(slots.items()):
+        mins = round((parse_t(ko) - t).total_seconds() / 60)
+        title = f"📅 <b>Matchday digest</b> · KO {hhmm(ko)} (Helsinki) · in {mins} min"
+        if any([notify(text, dry) for text in build_digest(ms, first, CFG["min_edge"], title)]):
+            st["sent"].append(f"digest|{ko}")
+            save(st, dry)
+
     if not dry:
         append_snap(snaps)
         write_bets(st["bets"])
@@ -213,7 +424,9 @@ def main():
 
 
 if __name__ == "__main__":
-    if "--test-form" in sys.argv:
+    if "--test-telegram" in sys.argv:
+        sys.exit(0 if send_test_digest() else 1)
+    elif "--test-form" in sys.argv:
         ok = post_form("TEST", "TEST", now().isoformat(), "Over 2.5", 1.0, test=True)
         print("TEST form submission:", "OK" if ok else "FAILED")
     else:

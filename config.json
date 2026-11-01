@@ -1,5 +1,7 @@
 {
   "min_edge": 0.03,
+  "digest_window_minutes": [45, 75],
+  "lean_minutes": 30,
   "window_hours": 3,
   "min_poll_gap_minutes": 30,
   "schedule_refresh_hours": 6,

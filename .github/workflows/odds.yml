@@ -9,6 +9,10 @@ on:
         description: "Send one TEST row to the form and exit"
         type: boolean
         default: false
+      test_telegram:
+        description: "Send a sample digest to Telegram from the latest snapshots (logs nothing to the form)"
+        type: boolean
+        default: false
 concurrency: odds-logger
 permissions:
   contents: write
@@ -20,13 +24,22 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - run: python logger.py ${{ inputs.test_form && '--test-form' || '' }}
+      - run: python logger.py ${{ inputs.test_form && '--test-form' || (inputs.test_telegram && '--test-telegram' || '') }}
         env:
           ODDS_API_KEY: ${{ secrets.ODDS_API_KEY }}
           FORM_URL: ${{ secrets.FORM_URL }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
       - name: Persist state
+        if: always()  # keep state.json even if the logger step crashed after posting a bet
         run: |
           git config user.name "odds-bot"
           git config user.email "bot@users.noreply.github.com"
           git add -A
-          git diff --cached --quiet || (git commit -m "state" && git push)
+          git diff --cached --quiet && exit 0
+          git commit -m "state"
+          for i in 1 2 3; do
+            git push && exit 0
+            git pull --rebase -X theirs
+          done
+          exit 1
