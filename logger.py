@@ -74,6 +74,23 @@ def all_rows(event):
     return rows
 
 
+def totals_gap_rows(event, t, mins):
+    """Raw totals lines (all points, quarter lines too) from both books when either lacks a full Over/Under 2.5 pair.
+    A book with no totals at all gets one row with empty point/outcome/price."""
+    raw = {}
+    for book in ("pinnacle", "nordicbet"):
+        raw[book] = [o for b in event.get("bookmakers", []) if b["key"] == book
+                     for m in b["markets"] if m["key"] == "totals" for o in m["outcomes"]]
+    missing = [b for b, outs in raw.items()
+               if {o["name"] for o in outs if o.get("point") == 2.5} != {"Over", "Under"}]
+    if not missing:
+        return []
+    base = dict(time=t.isoformat(), event_id=event["id"], kickoff=event["commence_time"], mins_to_kickoff=mins,
+                match=f"{event['home_team']} - {event['away_team']}", missing="+".join(missing))
+    return [dict(base, book=b, point=o.get("point"), outcome=o["name"], price=o["price"])
+            for b, outs in raw.items() for o in outs] +            [dict(base, book=b) for b, outs in raw.items() if not outs]
+
+
 def find_edges(event, min_edge):
     return [r for r in all_rows(event) if r["edge"] is not None and r["edge"] >= min_edge]
 
@@ -107,7 +124,8 @@ def post_form(home, away, kickoff, market, odds, test=False, source="Model (pape
         return r.status < 400
 
 
-SNAP_FILE, BETS_FILE = "snapshots.csv", "bets.csv"
+SNAP_FILE, BETS_FILE, GAPS_FILE = "snapshots.csv", "bets.csv", "totals_gaps.csv"
+GAP_COLS = ["time", "event_id", "match", "kickoff", "mins_to_kickoff", "missing", "book", "point", "outcome", "price"]
 SNAP_COLS = ["time", "event_id", "match", "kickoff", "mins_to_kickoff", "market",
              "nordic_odds", "pinnacle_odds", "fair_prob", "edge"]
 BET_COLS = ["key", "logged_at", "match", "kickoff", "market", "open_nordic_odds", "open_pinnacle_odds",
@@ -283,6 +301,17 @@ def append_snap(rows):
         w.writerows(rows)
 
 
+def append_gaps(rows):
+    if not rows:
+        return
+    new = not os.path.exists(GAPS_FILE)
+    with open(GAPS_FILE, "a", newline="") as f:
+        w = csv.DictWriter(f, GAP_COLS)
+        if new:
+            w.writeheader()
+        w.writerows(rows)
+
+
 def write_bets(bets):
     with open(BETS_FILE, "w", newline="") as f:
         w = csv.DictWriter(f, BET_COLS, extrasaction="ignore")
@@ -341,12 +370,13 @@ def main():
     st["remaining"] = int(float(rem)) if rem is not None else st["remaining"]
     print(f"credits remaining: {st['remaining']}")
 
-    snaps, matches = [], []
+    snaps, matches, gaps = [], [], []
     first = first_odds_today(local_date(t.isoformat()))  # first NordicBet odds per match/market today
     for ev in odds:
         mins = round((parse_t(ev["commence_time"]) - t).total_seconds() / 60)
         name = f"{ev['home_team']} - {ev['away_team']}"
         rows = all_rows(ev)
+        gaps += totals_gap_rows(ev, t, mins)
         m = dict(id=ev["id"], name=name, kickoff=ev["commence_time"], rows=rows)
         matches.append(m)
         for r in rows:
@@ -424,6 +454,7 @@ def main():
 
     if not dry:
         append_snap(snaps)
+        append_gaps(gaps)
         write_bets(st["bets"])
     save(st, dry)
 

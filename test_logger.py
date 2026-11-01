@@ -59,3 +59,19 @@ ev4 = copy.deepcopy(ev)
 blk = logger.match_block(dict(id="e1", name="A - B", kickoff="2026-11-01T16:30:00Z", rows=logger.all_rows(ev4)), {})
 assert blk.count("no NordicBet price") == 2 and "Over 2.5" in blk and "Under 2.5" in blk, blk
 print("ok digest")
+
+# totals gap log: raw lines from both books (quarter lines too) when either lacks a full 2.5 pair
+from datetime import datetime, timezone
+T = datetime(2026, 11, 1, 15, 30, tzinfo=timezone.utc)
+ev5 = copy.deepcopy(ev2)
+ev5.update(id="e5", commence_time="2026-11-01T16:30:00Z")
+assert logger.totals_gap_rows(ev5, T, 60) == []  # complete pair at 2.5 in both books
+pin5 = [b for b in ev5["bookmakers"] if b["key"] == "pinnacle"][0]["markets"][1]["outcomes"]
+pin5[:] = [o for o in pin5 if o["point"] != 2.5] + [{"name": "Over", "price": 1.8, "point": 2.75}]
+g = logger.totals_gap_rows(ev5, T, 60)
+assert {r["missing"] for r in g} == {"pinnacle"}
+assert {(r["book"], r["point"]) for r in g} >= {("pinnacle", 2.75), ("nordicbet", 2.25), ("nordicbet", 2.5)}, g
+[b for b in ev5["bookmakers"] if b["key"] == "nordicbet"][0]["markets"].pop(1)
+g = logger.totals_gap_rows(ev5, T, 60)
+assert {r["missing"] for r in g} == {"pinnacle+nordicbet"} and any(r["book"] == "nordicbet" and r.get("point") is None for r in g)
+print("ok gaps")
