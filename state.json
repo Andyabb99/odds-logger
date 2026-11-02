@@ -88,9 +88,9 @@
  ],
  "events_at": "2026-11-02T16:45:26.355874+00:00",
  "month": "2026-11",
- "calls": 10,
- "last_poll": "2026-11-02T18:30:54.194192+00:00",
- "remaining": 480,
+ "calls": 11,
+ "last_poll": "2026-11-02T19:00:52.292440+00:00",
+ "remaining": 478,
  "bets": [
   {
    "key": "6a3819cdbe2ba2fe5a3d8f9b4b459965|1X2 Draw|lean",
@@ -112,6 +112,7 @@
  ],
  "sent": [
   "digest|2026-11-01T16:30:00Z",
-  "lean|6a3819cdbe2ba2fe5a3d8f9b4b459965"
+  "lean|6a3819cdbe2ba2fe5a3d8f9b4b459965",
+  "digest|2026-11-02T20:00:00Z"
  ]
 }
