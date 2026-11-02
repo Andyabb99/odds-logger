@@ -15,3 +15,7 @@ time,event_id,match,kickoff,mins_to_kickoff,missing,book,point,outcome,price
 2026-11-02T18:00:47.304585+00:00,0f552d9c6990c69474f50ff2fb54e9a3,Newcastle United - Everton,2026-11-02T20:00:00Z,119,pinnacle,pinnacle,2.75,Under,2.04
 2026-11-02T18:00:47.304585+00:00,0f552d9c6990c69474f50ff2fb54e9a3,Newcastle United - Everton,2026-11-02T20:00:00Z,119,pinnacle,nordicbet,2.5,Over,1.68
 2026-11-02T18:00:47.304585+00:00,0f552d9c6990c69474f50ff2fb54e9a3,Newcastle United - Everton,2026-11-02T20:00:00Z,119,pinnacle,nordicbet,2.5,Under,2.18
+2026-11-02T18:30:54.194192+00:00,0f552d9c6990c69474f50ff2fb54e9a3,Newcastle United - Everton,2026-11-02T20:00:00Z,89,pinnacle,pinnacle,2.75,Over,1.86
+2026-11-02T18:30:54.194192+00:00,0f552d9c6990c69474f50ff2fb54e9a3,Newcastle United - Everton,2026-11-02T20:00:00Z,89,pinnacle,pinnacle,2.75,Under,2.05
+2026-11-02T18:30:54.194192+00:00,0f552d9c6990c69474f50ff2fb54e9a3,Newcastle United - Everton,2026-11-02T20:00:00Z,89,pinnacle,nordicbet,2.5,Over,1.62
+2026-11-02T18:30:54.194192+00:00,0f552d9c6990c69474f50ff2fb54e9a3,Newcastle United - Everton,2026-11-02T20:00:00Z,89,pinnacle,nordicbet,2.5,Under,2.25
