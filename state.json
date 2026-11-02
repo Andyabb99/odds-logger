@@ -88,9 +88,9 @@
  ],
  "events_at": "2026-11-02T16:45:26.355874+00:00",
  "month": "2026-11",
- "calls": 11,
- "last_poll": "2026-11-02T19:00:52.292440+00:00",
- "remaining": 478,
+ "calls": 12,
+ "last_poll": "2026-11-02T19:30:39.244791+00:00",
+ "remaining": 476,
  "bets": [
   {
    "key": "6a3819cdbe2ba2fe5a3d8f9b4b459965|1X2 Draw|lean",
@@ -108,11 +108,29 @@
    "close_pinnacle_odds": 3.44,
    "close_fair_prob": 0.28334,
    "close_edge": -0.03663
+  },
+  {
+   "key": "0f552d9c6990c69474f50ff2fb54e9a3|1X2 Home|lean",
+   "type": "lean",
+   "logged_at": "2026-11-02T19:30:39.244791+00:00",
+   "match": "Newcastle United - Everton",
+   "kickoff": "2026-11-02T20:00:00Z",
+   "market": "1X2 Home",
+   "open_nordic_odds": 2.15,
+   "open_pinnacle_odds": 2.15,
+   "open_fair_prob": 0.45327,
+   "open_edge": -0.02546,
+   "close_time": "2026-11-02T19:30:39.244791+00:00",
+   "close_nordic_odds": 2.15,
+   "close_pinnacle_odds": 2.15,
+   "close_fair_prob": 0.45327,
+   "close_edge": -0.02546
   }
  ],
  "sent": [
   "digest|2026-11-01T16:30:00Z",
   "lean|6a3819cdbe2ba2fe5a3d8f9b4b459965",
-  "digest|2026-11-02T20:00:00Z"
+  "digest|2026-11-02T20:00:00Z",
+  "lean|0f552d9c6990c69474f50ff2fb54e9a3"
  ]
 }
