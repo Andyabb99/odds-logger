@@ -103,7 +103,8 @@
    "close_nordic_odds": 3.4,
    "close_pinnacle_odds": 3.44,
    "close_fair_prob": 0.28334,
-   "close_edge": -0.03663
+   "close_edge": -0.03663,
+   "close_fair_odds": 3.5293
   },
   {
    "key": "0f552d9c6990c69474f50ff2fb54e9a3|1X2 Home|lean",
@@ -120,7 +121,8 @@
    "close_nordic_odds": 2.15,
    "close_pinnacle_odds": 2.15,
    "close_fair_prob": 0.45327,
-   "close_edge": -0.02546
+   "close_edge": -0.02546,
+   "close_fair_odds": 2.2062
   }
  ],
  "sent": [

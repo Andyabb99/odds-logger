@@ -13,6 +13,10 @@ on:
         description: "Send a sample digest to Telegram from the latest snapshots (logs nothing to the form)"
         type: boolean
         default: false
+      backfill:
+        description: "One-off: log missing lean bets for past matches (posts to the form)"
+        type: boolean
+        default: false
 concurrency: odds-logger
 permissions:
   contents: write
@@ -24,7 +28,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - run: python logger.py ${{ inputs.test_form && '--test-form' || (inputs.test_telegram && '--test-telegram' || '') }}
+      - run: python logger.py ${{ inputs.test_form && '--test-form' || (inputs.test_telegram && '--test-telegram' || (inputs.backfill && '--backfill' || '')) }}
         env:
           ODDS_API_KEY: ${{ secrets.ODDS_API_KEY }}
           FORM_URL: ${{ secrets.FORM_URL }}

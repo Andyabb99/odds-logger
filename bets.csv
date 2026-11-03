@@ -1,3 +1,3 @@
-key,logged_at,match,kickoff,market,open_nordic_odds,open_pinnacle_odds,open_fair_prob,open_edge,close_time,close_nordic_odds,close_pinnacle_odds,close_fair_prob,close_edge,type
-6a3819cdbe2ba2fe5a3d8f9b4b459965|1X2 Draw|lean,2026-11-01T16:00:43.845938+00:00,Liverpool - Arsenal,2026-11-01T16:30:00Z,1X2 Draw,3.4,3.44,0.28334,-0.03663,2026-11-01T16:00:43.845938+00:00,3.4,3.44,0.28334,-0.03663,lean
-0f552d9c6990c69474f50ff2fb54e9a3|1X2 Home|lean,2026-11-02T19:30:39.244791+00:00,Newcastle United - Everton,2026-11-02T20:00:00Z,1X2 Home,2.15,2.15,0.45327,-0.02546,2026-11-02T19:30:39.244791+00:00,2.15,2.15,0.45327,-0.02546,lean
+key,logged_at,match,kickoff,market,open_nordic_odds,open_pinnacle_odds,open_fair_prob,open_edge,close_time,close_nordic_odds,close_pinnacle_odds,close_fair_prob,close_fair_odds,close_edge,type,late
+6a3819cdbe2ba2fe5a3d8f9b4b459965|1X2 Draw|lean,2026-11-01T16:00:43.845938+00:00,Liverpool - Arsenal,2026-11-01T16:30:00Z,1X2 Draw,3.4,3.44,0.28334,-0.03663,2026-11-01T16:00:43.845938+00:00,3.4,3.44,0.28334,3.5293,-0.03663,lean,
+0f552d9c6990c69474f50ff2fb54e9a3|1X2 Home|lean,2026-11-02T19:30:39.244791+00:00,Newcastle United - Everton,2026-11-02T20:00:00Z,1X2 Home,2.15,2.15,0.45327,-0.02546,2026-11-02T19:30:39.244791+00:00,2.15,2.15,0.45327,2.2062,-0.02546,lean,

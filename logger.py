@@ -130,7 +130,9 @@ SNAP_COLS = ["time", "event_id", "match", "kickoff", "mins_to_kickoff", "market"
              "nordic_odds", "pinnacle_odds", "fair_prob", "edge"]
 BET_COLS = ["key", "logged_at", "match", "kickoff", "market", "open_nordic_odds", "open_pinnacle_odds",
             "open_fair_prob", "open_edge", "close_time", "close_nordic_odds", "close_pinnacle_odds",
-            "close_fair_prob", "close_edge", "type"]
+            "close_fair_prob", "close_fair_odds", "close_edge", "type", "late"]
+# late: "" = logged live at the digest poll, "late" = logged after kickoff from the latest snapshot (missed poll),
+# "backfill" = created afterwards from the snapshot nearest 60 min before kickoff. logged_at is then that snapshot's time.
 
 
 # ---------- Telegram digest / alerts ----------
@@ -332,6 +334,114 @@ def save(st, dry):
         json.dump(st, open(STATE_FILE, "w"), indent=1)
 
 
+def fair_odds(p):
+    """Pinnacle fair (de-margined) decimal odds for a fair probability."""
+    return round(1 / p, 4) if p else None
+
+
+def close_fields(time, r):
+    """Closing columns of a bet from a row of the last pre-kickoff poll (empty when the market vanished)."""
+    if r is None:
+        return {}
+    return dict(close_time=time, close_nordic_odds=r["nordic_odds"], close_pinnacle_odds=r["pinnacle_odds"],
+                close_fair_prob=round(r["fair_prob"], 5), close_fair_odds=fair_odds(r["fair_prob"]),
+                close_edge=None if r["edge"] is None else round(r["edge"], 5))
+
+
+def pick_lean(rows):
+    """Lean pick: the outcome with the highest edge vs Pinnacle fair across all priced markets (even if negative)."""
+    cands = [r for r in rows if r["edge"] is not None]
+    return max(cands, key=lambda r: r["edge"]) if cands else None
+
+
+def has_lean(st, event_id):
+    return f"lean|{event_id}" in st["sent"] or \
+        any(b["type"] == "lean" and b["key"].startswith(event_id + "|") for b in st["bets"])
+
+
+def log_lean(st, event_id, name, kickoff, best, logged_at, close_time, close, dry, late=""):
+    """Post the lean pick to the form and record it. False if the POST failed (retried next run)."""
+    lean_key, key = f"lean|{event_id}", f"{event_id}|{best['market']}"
+    if key in st["logged"]:
+        print("Lean skipped (already logged as value bet):", key)
+        st["sent"].append(lean_key)
+        return True
+    print(f"LEAN BET ({late}):" if late else "LEAN BET:", key, best)
+    home, away = name.split(" - ", 1)
+    if not (dry or post_form(home, away, kickoff, best["market"], best["nordic_odds"], source="Model (lean)")):
+        print("Lean form POST failed; will retry next run.")
+        return False
+    st["sent"].append(lean_key)
+    st["bets"].append(dict(key=key + "|lean", type="lean", logged_at=logged_at, match=name, kickoff=kickoff,
+                           market=best["market"], open_nordic_odds=best["nordic_odds"],
+                           open_pinnacle_odds=best["pinnacle_odds"], open_fair_prob=round(best["fair_prob"], 5),
+                           open_edge=round(best["edge"], 5), late=late, **close_fields(close_time, close)))
+    return True
+
+
+def snap_events():
+    """{event_id: dict(id, name, kickoff, polls={poll time: [row dicts]})} from snapshots.csv, pre-kickoff polls only."""
+    out = {}
+    if os.path.exists(SNAP_FILE):
+        for r in csv.DictReader(open(SNAP_FILE, newline="")):
+            if parse_t(r["time"]) >= parse_t(r["kickoff"]):
+                continue
+            e = out.setdefault(r["event_id"], dict(id=r["event_id"], name=r["match"], kickoff=r["kickoff"], polls={}))
+            e["polls"].setdefault(r["time"], []).append(
+                dict(market=r["market"], fair_prob=float(r["fair_prob"]), pinnacle_odds=float(r["pinnacle_odds"]),
+                     nordic_odds=float(r["nordic_odds"]) if r["nordic_odds"] else None,
+                     edge=float(r["edge"]) if r["edge"] else None))
+    return out
+
+
+def last_poll(e):
+    k = max(e["polls"], key=parse_t)
+    return k, e["polls"][k]
+
+
+def late_leans(st, t, dry):
+    """Matches that kicked off without a lean row (missed poll): log from the latest pre-kickoff snapshot, marked late."""
+    horizon = t - timedelta(hours=CFG["late_lookback_hours"])
+    for e in snap_events().values():
+        if not horizon <= parse_t(e["kickoff"]) <= t or has_lean(st, e["id"]):
+            continue
+        when, rows = last_poll(e)
+        best = pick_lean(rows)
+        if best is None:
+            st["sent"].append(f"lean|{e['id']}")  # nothing priced by both books: don't re-check every run
+        else:
+            log_lean(st, e["id"], e["name"], e["kickoff"], best, when, when, best, dry, late="late")
+        save(st, dry)
+
+
+def backfill(st, dry):
+    """One-off: lean rows for every match since CFG['backfill_since'] without one, from the snapshot nearest 60 min
+    before kickoff (same pick rule), closing odds from the last pre-kickoff snapshot."""
+    n = 0
+    for e in sorted(snap_events().values(), key=lambda e: e["kickoff"]):
+        ko = parse_t(e["kickoff"])
+        if e["kickoff"][:10] < CFG["backfill_since"] or ko > now() or has_lean(st, e["id"]):
+            continue
+        when = min(e["polls"], key=lambda k: abs((ko - parse_t(k)).total_seconds() - 3600))
+        best = pick_lean(e["polls"][when])
+        if best is None:
+            print("No priced outcome, skipping:", e["name"])
+            continue
+        end, end_rows = last_poll(e)
+        close = next((r for r in end_rows if r["market"] == best["market"]), None)
+        if log_lean(st, e["id"], e["name"], e["kickoff"], best, when, end, close, dry, late="backfill"):
+            n += 1
+        save(st, dry)
+    print(f"Backfill: {n} lean row(s) added.")
+
+
+def migrate_bets(st):
+    """Bets logged before close_fair_odds existed: derive it from their closing fair probability."""
+    for b in st["bets"]:
+        if not b.get("close_fair_odds") and b.get("close_fair_prob"):
+            b["close_fair_odds"] = fair_odds(float(b["close_fair_prob"]))
+
+
 def main():
     dry = os.environ.get("DRY_RUN") == "1"
     st = load_state()
@@ -341,6 +451,11 @@ def main():
     month = t.strftime("%Y-%m")
     if st["month"] != month:
         st.update(month=month, calls=0)
+
+    migrate_bets(st)
+    late_leans(st, t, dry)  # before any early return: a missed lean is logged on the next run
+    if not dry:
+        write_bets(st["bets"])
 
     # Schedule cache: /events costs no credits; refreshed every few hours.
     if not st["events_at"] or t - parse_t(st["events_at"]) > timedelta(hours=CFG["schedule_refresh_hours"]):
@@ -371,6 +486,7 @@ def main():
     print(f"credits remaining: {st['remaining']}")
 
     snaps, matches, gaps = [], [], []
+    lo, hi = CFG["digest_window_minutes"]
     first = first_odds_today(local_date(t.isoformat()))  # first NordicBet odds per match/market today
     for ev in odds:
         mins = round((parse_t(ev["commence_time"]) - t).total_seconds() / 60)
@@ -389,9 +505,7 @@ def main():
             # logged bets (value and lean) keep their closing odds updated; the last pre-kickoff snapshot wins
             for bet in st["bets"]:
                 if bet["key"].removesuffix("|lean") == key:
-                    bet.update(close_time=t.isoformat(), close_nordic_odds=r["nordic_odds"],
-                               close_pinnacle_odds=r["pinnacle_odds"],
-                               close_fair_prob=round(r["fair_prob"], 5), close_edge=edge)
+                    bet.update(close_fields(t.isoformat(), r))
             if r["edge"] is None or r["edge"] < CFG["min_edge"] or key in st["logged"]:
                 continue
             print("PAPER BET:", key, r)
@@ -410,36 +524,14 @@ def main():
             else:
                 print("Form POST failed; will retry next run.")
 
-        # lean bet: first poll within lean_minutes of kickoff (polls are >= min_poll_gap apart, so it is the last)
-        lean_key = f"lean|{ev['id']}"
+        # lean bet: first poll in the digest window (45-75 min before kickoff), so later polls measure closing value
         secs = (parse_t(ev["commence_time"]) - t).total_seconds()
-        cands = [r for r in rows if r["edge"] is not None]
-        if cands and secs <= CFG["lean_minutes"] * 60 and lean_key not in st["sent"]:
-            best = max(cands, key=lambda r: r["edge"])
-            key = f"{ev['id']}|{best['market']}"
-            if key in st["logged"]:
-                print("Lean skipped (already logged as value bet):", key)
-                st["sent"].append(lean_key)
-            else:
-                print("LEAN BET:", key, best)
-                if dry or post_form(ev["home_team"], ev["away_team"], ev["commence_time"],
-                                    best["market"], best["nordic_odds"], source="Model (lean)"):
-                    st["sent"].append(lean_key)
-                    edge = round(best["edge"], 5)
-                    st["bets"].append(dict(key=key + "|lean", type="lean", logged_at=t.isoformat(), match=name,
-                                           kickoff=ev["commence_time"], market=best["market"],
-                                           open_nordic_odds=best["nordic_odds"],
-                                           open_pinnacle_odds=best["pinnacle_odds"],
-                                           open_fair_prob=round(best["fair_prob"], 5), open_edge=edge,
-                                           close_time=t.isoformat(), close_nordic_odds=best["nordic_odds"],
-                                           close_pinnacle_odds=best["pinnacle_odds"],
-                                           close_fair_prob=round(best["fair_prob"], 5), close_edge=edge))
-                else:
-                    print("Lean form POST failed; will retry next run.")
+        best = pick_lean(rows)
+        if best and lo * 60 <= secs <= hi * 60 and f"lean|{ev['id']}" not in st["sent"]:
+            log_lean(st, ev["id"], name, ev["commence_time"], best, t.isoformat(), t.isoformat(), best, dry)
             save(st, dry)
 
     # digest: one message per kickoff slot, on the first poll 45-75 min before kickoff
-    lo, hi = CFG["digest_window_minutes"]
     slots = {}
     for m in matches:
         secs = (parse_t(m["kickoff"]) - t).total_seconds()
@@ -462,6 +554,16 @@ def main():
 if __name__ == "__main__":
     if "--test-telegram" in sys.argv:
         sys.exit(0 if send_test_digest() else 1)
+    elif "--backfill" in sys.argv:
+        dry = os.environ.get("DRY_RUN") == "1"
+        _st = load_state()
+        _st.setdefault("bets", [])
+        _st.setdefault("sent", [])
+        migrate_bets(_st)
+        backfill(_st, dry)
+        if not dry:
+            write_bets(_st["bets"])
+            save(_st, False)
     elif "--test-form" in sys.argv:
         ok = post_form("TEST", "TEST", now().isoformat(), "Over 2.5", 1.0, test=True)
         print("TEST form submission:", "OK" if ok else "FAILED")

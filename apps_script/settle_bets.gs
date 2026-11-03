@@ -1,6 +1,8 @@
 /**
  * Bet_tracker auto-settler.
  * Reads the "Bets" tab and writes ONLY column K (Result) and column L (Closing odds), and only into empty cells.
+ * Column L = Pinnacle fair closing odds (bets.csv close_fair_odds) of the matching bot bet; for "Me (real)" rows the
+ * bot bet on the same match/market. CLV in the sheet = my odds / column L - 1.
  * Activity goes to the "Settle log" tab. Secrets live in Script Properties:
  *   FOOTBALL_DATA_TOKEN  - football-data.org API token
  *   GITHUB_TOKEN         - fine-grained, read-only (Contents) token for Andyabb99/odds-logger
@@ -11,7 +13,7 @@ var CFG = {
   TZ: 'Europe/Helsinki',
   GITHUB_REPO: 'Andyabb99/odds-logger',
   GITHUB_FILE: 'bets.csv',
-  CLOSING_COL: 'close_nordic_odds',   // or 'close_pinnacle_odds'
+  CLOSING_COL: 'close_fair_odds',      // Pinnacle de-margined closing odds; CLV = my odds / this - 1
   MIN_DAYS_AGO: 1,                    // settle only matches at least this many days old
   KICKOFF_BUFFER_MIN: 30,             // closing odds are only taken this long after kickoff (bot stops updating then)
   LOG_MAX_ROWS: 1000
