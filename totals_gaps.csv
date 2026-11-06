@@ -27,3 +27,7 @@ time,event_id,match,kickoff,mins_to_kickoff,missing,book,point,outcome,price
 2026-11-02T19:30:39.244791+00:00,0f552d9c6990c69474f50ff2fb54e9a3,Newcastle United - Everton,2026-11-02T20:00:00Z,29,pinnacle,pinnacle,2.75,Under,1.88
 2026-11-02T19:30:39.244791+00:00,0f552d9c6990c69474f50ff2fb54e9a3,Newcastle United - Everton,2026-11-02T20:00:00Z,29,pinnacle,nordicbet,2.5,Over,1.78
 2026-11-02T19:30:39.244791+00:00,0f552d9c6990c69474f50ff2fb54e9a3,Newcastle United - Everton,2026-11-02T20:00:00Z,29,pinnacle,nordicbet,2.5,Under,2.02
+2026-11-06T17:00:50.882239+00:00,586bec023ee8ac2f0645d963bd2c9d25,Everton - Coventry City,2026-11-06T20:00:00Z,179,pinnacle,pinnacle,2.75,Over,1.96
+2026-11-06T17:00:50.882239+00:00,586bec023ee8ac2f0645d963bd2c9d25,Everton - Coventry City,2026-11-06T20:00:00Z,179,pinnacle,pinnacle,2.75,Under,1.94
+2026-11-06T17:00:50.882239+00:00,586bec023ee8ac2f0645d963bd2c9d25,Everton - Coventry City,2026-11-06T20:00:00Z,179,pinnacle,nordicbet,2.5,Over,1.72
+2026-11-06T17:00:50.882239+00:00,586bec023ee8ac2f0645d963bd2c9d25,Everton - Coventry City,2026-11-06T20:00:00Z,179,pinnacle,nordicbet,2.5,Under,2.1
