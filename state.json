@@ -84,9 +84,9 @@
  ],
  "events_at": "2026-11-06T18:15:25.234122+00:00",
  "month": "2026-11",
- "calls": 16,
- "last_poll": "2026-11-06T18:30:37.210133+00:00",
- "remaining": 468,
+ "calls": 17,
+ "last_poll": "2026-11-06T19:00:49.716734+00:00",
+ "remaining": 466,
  "bets": [
   {
    "key": "6a3819cdbe2ba2fe5a3d8f9b4b459965|1X2 Draw|lean",
@@ -275,6 +275,25 @@
    "close_fair_prob": 0.48487,
    "close_fair_odds": 2.0624,
    "close_edge": -0.03995
+  },
+  {
+   "key": "586bec023ee8ac2f0645d963bd2c9d25|1X2 Away|lean",
+   "type": "lean",
+   "logged_at": "2026-11-06T19:00:49.716734+00:00",
+   "match": "Everton - Coventry City",
+   "kickoff": "2026-11-06T20:00:00Z",
+   "market": "1X2 Away",
+   "open_nordic_odds": 5.05,
+   "open_pinnacle_odds": 4.98,
+   "open_fair_prob": 0.19501,
+   "open_edge": -0.01521,
+   "late": "",
+   "close_time": "2026-11-06T19:00:49.716734+00:00",
+   "close_nordic_odds": 5.05,
+   "close_pinnacle_odds": 4.98,
+   "close_fair_prob": 0.19501,
+   "close_fair_odds": 5.128,
+   "close_edge": -0.01521
   }
  ],
  "sent": [
@@ -289,6 +308,8 @@
   "lean|d20fbb0cd5ad9369b8ed6f2c4a198619",
   "lean|1ec76c009147b63859f68c6b5a1dd77b",
   "lean|01b17432a283eb27af86ae45602eb6dd",
-  "lean|640c52a86289f35698261b41987dd71e"
+  "lean|640c52a86289f35698261b41987dd71e",
+  "lean|586bec023ee8ac2f0645d963bd2c9d25",
+  "digest|2026-11-06T20:00:00Z"
  ]
 }
