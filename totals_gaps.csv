@@ -31,3 +31,7 @@ time,event_id,match,kickoff,mins_to_kickoff,missing,book,point,outcome,price
 2026-11-06T17:00:50.882239+00:00,586bec023ee8ac2f0645d963bd2c9d25,Everton - Coventry City,2026-11-06T20:00:00Z,179,pinnacle,pinnacle,2.75,Under,1.94
 2026-11-06T17:00:50.882239+00:00,586bec023ee8ac2f0645d963bd2c9d25,Everton - Coventry City,2026-11-06T20:00:00Z,179,pinnacle,nordicbet,2.5,Over,1.72
 2026-11-06T17:00:50.882239+00:00,586bec023ee8ac2f0645d963bd2c9d25,Everton - Coventry City,2026-11-06T20:00:00Z,179,pinnacle,nordicbet,2.5,Under,2.1
+2026-11-06T17:30:38.958983+00:00,586bec023ee8ac2f0645d963bd2c9d25,Everton - Coventry City,2026-11-06T20:00:00Z,149,pinnacle,pinnacle,2.75,Over,2.04
+2026-11-06T17:30:38.958983+00:00,586bec023ee8ac2f0645d963bd2c9d25,Everton - Coventry City,2026-11-06T20:00:00Z,149,pinnacle,pinnacle,2.75,Under,1.87
+2026-11-06T17:30:38.958983+00:00,586bec023ee8ac2f0645d963bd2c9d25,Everton - Coventry City,2026-11-06T20:00:00Z,149,pinnacle,nordicbet,2.5,Over,1.8
+2026-11-06T17:30:38.958983+00:00,586bec023ee8ac2f0645d963bd2c9d25,Everton - Coventry City,2026-11-06T20:00:00Z,149,pinnacle,nordicbet,2.5,Under,2.02
