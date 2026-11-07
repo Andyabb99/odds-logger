@@ -51,3 +51,11 @@ time,event_id,match,kickoff,mins_to_kickoff,missing,book,point,outcome,price
 2026-11-06T19:30:35.779304+00:00,586bec023ee8ac2f0645d963bd2c9d25,Everton - Coventry City,2026-11-06T20:00:00Z,29,pinnacle,pinnacle,2.75,Under,1.98
 2026-11-06T19:30:35.779304+00:00,586bec023ee8ac2f0645d963bd2c9d25,Everton - Coventry City,2026-11-06T20:00:00Z,29,pinnacle,nordicbet,2.5,Over,1.7
 2026-11-06T19:30:35.779304+00:00,586bec023ee8ac2f0645d963bd2c9d25,Everton - Coventry City,2026-11-06T20:00:00Z,29,pinnacle,nordicbet,2.5,Under,2.15
+2026-11-07T12:00:46.011677+00:00,842fcc5b9feb8c63054a661ad1fc8926,Arsenal - Hull City,2026-11-07T15:00:00Z,179,pinnacle,pinnacle,3.0,Over,1.81
+2026-11-07T12:00:46.011677+00:00,842fcc5b9feb8c63054a661ad1fc8926,Arsenal - Hull City,2026-11-07T15:00:00Z,179,pinnacle,pinnacle,3.0,Under,2.09
+2026-11-07T12:00:46.011677+00:00,842fcc5b9feb8c63054a661ad1fc8926,Arsenal - Hull City,2026-11-07T15:00:00Z,179,pinnacle,nordicbet,2.5,Over,1.48
+2026-11-07T12:00:46.011677+00:00,842fcc5b9feb8c63054a661ad1fc8926,Arsenal - Hull City,2026-11-07T15:00:00Z,179,pinnacle,nordicbet,2.5,Under,2.65
+2026-11-07T12:00:46.011677+00:00,3903e98a54db0f2cc23095407fe9dad8,Fulham - Newcastle United,2026-11-07T15:00:00Z,179,pinnacle,pinnacle,2.75,Over,1.9
+2026-11-07T12:00:46.011677+00:00,3903e98a54db0f2cc23095407fe9dad8,Fulham - Newcastle United,2026-11-07T15:00:00Z,179,pinnacle,pinnacle,2.75,Under,2.01
+2026-11-07T12:00:46.011677+00:00,3903e98a54db0f2cc23095407fe9dad8,Fulham - Newcastle United,2026-11-07T15:00:00Z,179,pinnacle,nordicbet,2.5,Over,1.7
+2026-11-07T12:00:46.011677+00:00,3903e98a54db0f2cc23095407fe9dad8,Fulham - Newcastle United,2026-11-07T15:00:00Z,179,pinnacle,nordicbet,2.5,Under,2.15
