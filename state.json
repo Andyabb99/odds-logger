@@ -80,9 +80,9 @@
  ],
  "events_at": "2026-11-07T06:45:22.547990+00:00",
  "month": "2026-11",
- "calls": 22,
- "last_poll": "2026-11-07T11:00:48.770891+00:00",
- "remaining": 456,
+ "calls": 23,
+ "last_poll": "2026-11-07T11:30:34.982520+00:00",
+ "remaining": 454,
  "bets": [
   {
    "key": "6a3819cdbe2ba2fe5a3d8f9b4b459965|1X2 Draw|lean",
@@ -290,6 +290,25 @@
    "close_fair_prob": 0.18923,
    "close_fair_odds": 5.2845,
    "close_edge": -0.04437
+  },
+  {
+   "key": "5c87852253fd11eea5d34ad723356607|1X2 Away|lean",
+   "type": "lean",
+   "logged_at": "2026-11-07T11:30:34.982520+00:00",
+   "match": "Leeds United - Tottenham Hotspur",
+   "kickoff": "2026-11-07T12:30:00Z",
+   "market": "1X2 Away",
+   "open_nordic_odds": 2.62,
+   "open_pinnacle_odds": 2.58,
+   "open_fair_prob": 0.37813,
+   "open_edge": -0.00931,
+   "late": "",
+   "close_time": "2026-11-07T11:30:34.982520+00:00",
+   "close_nordic_odds": 2.62,
+   "close_pinnacle_odds": 2.58,
+   "close_fair_prob": 0.37813,
+   "close_fair_odds": 2.6446,
+   "close_edge": -0.00931
   }
  ],
  "sent": [
@@ -306,6 +325,8 @@
   "lean|01b17432a283eb27af86ae45602eb6dd",
   "lean|640c52a86289f35698261b41987dd71e",
   "lean|586bec023ee8ac2f0645d963bd2c9d25",
-  "digest|2026-11-06T20:00:00Z"
+  "digest|2026-11-06T20:00:00Z",
+  "lean|5c87852253fd11eea5d34ad723356607",
+  "digest|2026-11-07T12:30:00Z"
  ]
 }
