@@ -80,9 +80,9 @@
  ],
  "events_at": "2026-11-07T12:45:24.126159+00:00",
  "month": "2026-11",
- "calls": 32,
- "last_poll": "2026-11-07T16:00:46.356382+00:00",
- "remaining": 436,
+ "calls": 33,
+ "last_poll": "2026-11-07T16:30:36.569394+00:00",
+ "remaining": 434,
  "bets": [
   {
    "key": "6a3819cdbe2ba2fe5a3d8f9b4b459965|1X2 Draw|lean",
@@ -347,6 +347,25 @@
    "close_fair_prob": 0.27284,
    "close_fair_odds": 3.6651,
    "close_edge": -0.04505
+  },
+  {
+   "key": "59c5f635cfe11613c07e9a5520ced5c1|1X2 Away|lean",
+   "type": "lean",
+   "logged_at": "2026-11-07T16:30:36.569394+00:00",
+   "match": "Nottingham Forest - Manchester City",
+   "kickoff": "2026-11-07T17:30:00Z",
+   "market": "1X2 Away",
+   "open_nordic_odds": 1.68,
+   "open_pinnacle_odds": 1.7,
+   "open_fair_prob": 0.57199,
+   "open_edge": -0.03906,
+   "late": "",
+   "close_time": "2026-11-07T16:30:36.569394+00:00",
+   "close_nordic_odds": 1.68,
+   "close_pinnacle_odds": 1.7,
+   "close_fair_prob": 0.57199,
+   "close_fair_odds": 1.7483,
+   "close_edge": -0.03906
   }
  ],
  "sent": [
@@ -368,6 +387,8 @@
   "digest|2026-11-07T12:30:00Z",
   "lean|842fcc5b9feb8c63054a661ad1fc8926",
   "lean|3903e98a54db0f2cc23095407fe9dad8",
-  "digest|2026-11-07T15:00:00Z"
+  "digest|2026-11-07T15:00:00Z",
+  "lean|59c5f635cfe11613c07e9a5520ced5c1",
+  "digest|2026-11-07T17:30:00Z"
  ]
 }
