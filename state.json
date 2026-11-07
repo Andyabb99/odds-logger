@@ -80,9 +80,9 @@
  ],
  "events_at": "2026-11-07T12:45:24.126159+00:00",
  "month": "2026-11",
- "calls": 33,
- "last_poll": "2026-11-07T16:30:36.569394+00:00",
- "remaining": 434,
+ "calls": 34,
+ "last_poll": "2026-11-07T17:00:47.733203+00:00",
+ "remaining": 432,
  "bets": [
   {
    "key": "6a3819cdbe2ba2fe5a3d8f9b4b459965|1X2 Draw|lean",
@@ -360,12 +360,12 @@
    "open_fair_prob": 0.57199,
    "open_edge": -0.03906,
    "late": "",
-   "close_time": "2026-11-07T16:30:36.569394+00:00",
+   "close_time": "2026-11-07T17:00:47.733203+00:00",
    "close_nordic_odds": 1.68,
-   "close_pinnacle_odds": 1.7,
-   "close_fair_prob": 0.57199,
-   "close_fair_odds": 1.7483,
-   "close_edge": -0.03906
+   "close_pinnacle_odds": 1.69,
+   "close_fair_prob": 0.57624,
+   "close_fair_odds": 1.7354,
+   "close_edge": -0.03191
   }
  ],
  "sent": [
