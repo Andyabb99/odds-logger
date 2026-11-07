@@ -91,3 +91,15 @@ time,event_id,match,kickoff,mins_to_kickoff,missing,book,point,outcome,price
 2026-11-07T14:00:44.759642+00:00,3903e98a54db0f2cc23095407fe9dad8,Fulham - Newcastle United,2026-11-07T15:00:00Z,59,pinnacle,pinnacle,2.75,Under,2.04
 2026-11-07T14:00:44.759642+00:00,3903e98a54db0f2cc23095407fe9dad8,Fulham - Newcastle United,2026-11-07T15:00:00Z,59,pinnacle,nordicbet,2.5,Over,1.62
 2026-11-07T14:00:44.759642+00:00,3903e98a54db0f2cc23095407fe9dad8,Fulham - Newcastle United,2026-11-07T15:00:00Z,59,pinnacle,nordicbet,2.5,Under,2.28
+2026-11-07T14:30:39.645528+00:00,842fcc5b9feb8c63054a661ad1fc8926,Arsenal - Hull City,2026-11-07T15:00:00Z,29,pinnacle,pinnacle,3.25,Over,2.01
+2026-11-07T14:30:39.645528+00:00,842fcc5b9feb8c63054a661ad1fc8926,Arsenal - Hull City,2026-11-07T15:00:00Z,29,pinnacle,pinnacle,3.25,Under,1.88
+2026-11-07T14:30:39.645528+00:00,842fcc5b9feb8c63054a661ad1fc8926,Arsenal - Hull City,2026-11-07T15:00:00Z,29,pinnacle,nordicbet,2.5,Over,1.42
+2026-11-07T14:30:39.645528+00:00,842fcc5b9feb8c63054a661ad1fc8926,Arsenal - Hull City,2026-11-07T15:00:00Z,29,pinnacle,nordicbet,2.5,Under,2.88
+2026-11-07T14:30:39.645528+00:00,3903e98a54db0f2cc23095407fe9dad8,Fulham - Newcastle United,2026-11-07T15:00:00Z,29,pinnacle,pinnacle,2.75,Over,1.81
+2026-11-07T14:30:39.645528+00:00,3903e98a54db0f2cc23095407fe9dad8,Fulham - Newcastle United,2026-11-07T15:00:00Z,29,pinnacle,pinnacle,2.75,Under,2.12
+2026-11-07T14:30:39.645528+00:00,3903e98a54db0f2cc23095407fe9dad8,Fulham - Newcastle United,2026-11-07T15:00:00Z,29,pinnacle,nordicbet,2.5,Over,1.62
+2026-11-07T14:30:39.645528+00:00,3903e98a54db0f2cc23095407fe9dad8,Fulham - Newcastle United,2026-11-07T15:00:00Z,29,pinnacle,nordicbet,2.5,Under,2.28
+2026-11-07T14:30:39.645528+00:00,59c5f635cfe11613c07e9a5520ced5c1,Nottingham Forest - Manchester City,2026-11-07T17:30:00Z,179,pinnacle,pinnacle,3.0,Over,2.08
+2026-11-07T14:30:39.645528+00:00,59c5f635cfe11613c07e9a5520ced5c1,Nottingham Forest - Manchester City,2026-11-07T17:30:00Z,179,pinnacle,pinnacle,3.0,Under,1.84
+2026-11-07T14:30:39.645528+00:00,59c5f635cfe11613c07e9a5520ced5c1,Nottingham Forest - Manchester City,2026-11-07T17:30:00Z,179,pinnacle,nordicbet,2.5,Over,1.62
+2026-11-07T14:30:39.645528+00:00,59c5f635cfe11613c07e9a5520ced5c1,Nottingham Forest - Manchester City,2026-11-07T17:30:00Z,179,pinnacle,nordicbet,2.5,Under,2.28
