@@ -211,3 +211,7 @@ time,event_id,match,kickoff,mins_to_kickoff,missing,book,point,outcome,price
 2026-11-08T15:00:46.724754+00:00,b0a4b5448a7e02d9ad1eaa817599fff0,Manchester United - Aston Villa,2026-11-08T16:30:00Z,89,pinnacle,pinnacle,3.0,Under,2.0
 2026-11-08T15:00:46.724754+00:00,b0a4b5448a7e02d9ad1eaa817599fff0,Manchester United - Aston Villa,2026-11-08T16:30:00Z,89,pinnacle,nordicbet,2.5,Over,1.55
 2026-11-08T15:00:46.724754+00:00,b0a4b5448a7e02d9ad1eaa817599fff0,Manchester United - Aston Villa,2026-11-08T16:30:00Z,89,pinnacle,nordicbet,2.5,Under,2.5
+2026-11-08T15:30:36.032445+00:00,b0a4b5448a7e02d9ad1eaa817599fff0,Manchester United - Aston Villa,2026-11-08T16:30:00Z,59,pinnacle,pinnacle,3.0,Over,1.81
+2026-11-08T15:30:36.032445+00:00,b0a4b5448a7e02d9ad1eaa817599fff0,Manchester United - Aston Villa,2026-11-08T16:30:00Z,59,pinnacle,pinnacle,3.0,Under,2.12
+2026-11-08T15:30:36.032445+00:00,b0a4b5448a7e02d9ad1eaa817599fff0,Manchester United - Aston Villa,2026-11-08T16:30:00Z,59,pinnacle,nordicbet,2.5,Over,1.5
+2026-11-08T15:30:36.032445+00:00,b0a4b5448a7e02d9ad1eaa817599fff0,Manchester United - Aston Villa,2026-11-08T16:30:00Z,59,pinnacle,nordicbet,2.5,Under,2.58
