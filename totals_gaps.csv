@@ -235,3 +235,7 @@ time,event_id,match,kickoff,mins_to_kickoff,missing,book,point,outcome,price
 2026-11-21T11:00:50.546241+00:00,6ef39b0fd8839f6e93a3de32523e9807,Manchester City - Fulham,2026-11-21T12:30:00Z,89,pinnacle,pinnacle,3.5,Under,1.83
 2026-11-21T11:00:50.546241+00:00,6ef39b0fd8839f6e93a3de32523e9807,Manchester City - Fulham,2026-11-21T12:30:00Z,89,pinnacle,nordicbet,2.5,Over,1.4
 2026-11-21T11:00:50.546241+00:00,6ef39b0fd8839f6e93a3de32523e9807,Manchester City - Fulham,2026-11-21T12:30:00Z,89,pinnacle,nordicbet,2.5,Under,2.92
+2026-11-21T11:30:39.738964+00:00,6ef39b0fd8839f6e93a3de32523e9807,Manchester City - Fulham,2026-11-21T12:30:00Z,59,pinnacle,pinnacle,3.25,Over,1.96
+2026-11-21T11:30:39.738964+00:00,6ef39b0fd8839f6e93a3de32523e9807,Manchester City - Fulham,2026-11-21T12:30:00Z,59,pinnacle,pinnacle,3.25,Under,1.94
+2026-11-21T11:30:39.738964+00:00,6ef39b0fd8839f6e93a3de32523e9807,Manchester City - Fulham,2026-11-21T12:30:00Z,59,pinnacle,nordicbet,2.5,Over,1.45
+2026-11-21T11:30:39.738964+00:00,6ef39b0fd8839f6e93a3de32523e9807,Manchester City - Fulham,2026-11-21T12:30:00Z,59,pinnacle,nordicbet,2.5,Under,2.75

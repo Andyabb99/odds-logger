@@ -84,9 +84,9 @@
  ],
  "events_at": "2026-11-21T08:45:25.799115+00:00",
  "month": "2026-11",
- "calls": 49,
- "last_poll": "2026-11-21T11:00:50.546241+00:00",
- "remaining": 402,
+ "calls": 50,
+ "last_poll": "2026-11-21T11:30:39.738964+00:00",
+ "remaining": 400,
  "bets": [
   {
    "key": "6a3819cdbe2ba2fe5a3d8f9b4b459965|1X2 Draw|lean",
@@ -465,6 +465,25 @@
    "close_fair_prob": 0.4782,
    "close_fair_odds": 2.0912,
    "close_edge": -0.04361
+  },
+  {
+   "key": "6ef39b0fd8839f6e93a3de32523e9807|1X2 Home|lean",
+   "type": "lean",
+   "logged_at": "2026-11-21T11:30:39.738964+00:00",
+   "match": "Manchester City - Fulham",
+   "kickoff": "2026-11-21T12:30:00Z",
+   "market": "1X2 Home",
+   "open_nordic_odds": 1.39,
+   "open_pinnacle_odds": 1.41,
+   "open_fair_prob": 0.68941,
+   "open_edge": -0.04171,
+   "late": "",
+   "close_time": "2026-11-21T11:30:39.738964+00:00",
+   "close_nordic_odds": 1.39,
+   "close_pinnacle_odds": 1.41,
+   "close_fair_prob": 0.68941,
+   "close_fair_odds": 1.4505,
+   "close_edge": -0.04171
   }
  ],
  "sent": [
@@ -495,6 +514,8 @@
   "lean|0cfbab01e152f81e34f9014e02c7eb79",
   "digest|2026-11-08T14:00:00Z",
   "lean|b0a4b5448a7e02d9ad1eaa817599fff0",
-  "digest|2026-11-08T16:30:00Z"
+  "digest|2026-11-08T16:30:00Z",
+  "lean|6ef39b0fd8839f6e93a3de32523e9807",
+  "digest|2026-11-21T12:30:00Z"
  ]
 }
