@@ -2,46 +2,6 @@
  "logged": [],
  "events": [
   {
-   "id": "6ef39b0fd8839f6e93a3de32523e9807",
-   "t": "2026-11-21T12:30:00Z"
-  },
-  {
-   "id": "b8d6ab6ecc8bb356c6335d3f417d0ecf",
-   "t": "2026-11-21T15:00:00Z"
-  },
-  {
-   "id": "cf68da11fa604c13fc9ef3219fad0314",
-   "t": "2026-11-21T15:00:00Z"
-  },
-  {
-   "id": "ac6cf70520a83c0949b4003bde53c709",
-   "t": "2026-11-21T15:00:00Z"
-  },
-  {
-   "id": "9f38413bdad666e2d2dfcc574dd12e66",
-   "t": "2026-11-21T15:00:00Z"
-  },
-  {
-   "id": "e67ee3a6f93bb90b8aefcf3dd204477c",
-   "t": "2026-11-21T15:00:00Z"
-  },
-  {
-   "id": "71bf9fe98c3e3be39cd1d059f8d71ae8",
-   "t": "2026-11-21T17:30:00Z"
-  },
-  {
-   "id": "230a356290e1a358e9dd2f7fa23de3b9",
-   "t": "2026-11-22T14:00:00Z"
-  },
-  {
-   "id": "4c08b213ed416e8f41e038f42a42b962",
-   "t": "2026-11-22T16:30:00Z"
-  },
-  {
-   "id": "aa77e2a08a1a003b0bbb62a5f8e8ae42",
-   "t": "2026-11-23T20:00:00Z"
-  },
-  {
    "id": "40d95e660c301c2d8a5a7a6317017b65",
    "t": "2026-11-27T20:00:00Z"
   },
@@ -80,9 +40,49 @@
   {
    "id": "d20ede55e54ed7b55fdc36ca373727c0",
    "t": "2026-11-29T16:30:00Z"
+  },
+  {
+   "id": "c7aff6bfea3ca1c4b177694977831b85",
+   "t": "2026-12-01T20:00:00Z"
+  },
+  {
+   "id": "836ad618789e171f7357649ce8e62b49",
+   "t": "2026-12-02T19:30:00Z"
+  },
+  {
+   "id": "4bd9a6fe4abb6774b3e8700b3dbe8d00",
+   "t": "2026-12-02T19:30:00Z"
+  },
+  {
+   "id": "10abd18165c999264777913e42c9f96c",
+   "t": "2026-12-02T19:30:00Z"
+  },
+  {
+   "id": "9629fcc970336d106d144eaa25cec853",
+   "t": "2026-12-02T19:30:00Z"
+  },
+  {
+   "id": "5f5235df01a384e23ff224101ff175e1",
+   "t": "2026-12-02T20:15:00Z"
+  },
+  {
+   "id": "2198fb9aab762e9e1c8c6af4113a1d31",
+   "t": "2026-12-02T20:15:00Z"
+  },
+  {
+   "id": "28546d4aefd5efb320c2d2ceee11b66d",
+   "t": "2026-12-02T20:15:00Z"
+  },
+  {
+   "id": "0c405290d0f977236962e55ba90c2c04",
+   "t": "2026-12-02T20:15:00Z"
+  },
+  {
+   "id": "0c1ccc010b185ada698661a21316696c",
+   "t": "2026-12-03T20:00:00Z"
   }
  ],
- "events_at": "2026-11-21T08:45:25.799115+00:00",
+ "events_at": "2026-11-24T09:19:35.971797+00:00",
  "month": "2026-11",
  "calls": 53,
  "last_poll": "2026-11-21T13:00:48.072228+00:00",
@@ -484,6 +484,101 @@
    "close_fair_prob": 0.70245,
    "close_fair_odds": 1.4236,
    "close_edge": -0.02359
+  },
+  {
+   "key": "b8d6ab6ecc8bb356c6335d3f417d0ecf|1X2 Draw|lean",
+   "type": "lean",
+   "logged_at": "2026-11-21T13:00:48.072228+00:00",
+   "match": "Aston Villa - Sunderland",
+   "kickoff": "2026-11-21T15:00:00Z",
+   "market": "1X2 Draw",
+   "open_nordic_odds": 3.8,
+   "open_pinnacle_odds": 3.87,
+   "open_fair_prob": 0.25165,
+   "open_edge": -0.04372,
+   "late": "late",
+   "close_time": "2026-11-21T13:00:48.072228+00:00",
+   "close_nordic_odds": 3.8,
+   "close_pinnacle_odds": 3.87,
+   "close_fair_prob": 0.25165,
+   "close_fair_odds": 3.9738,
+   "close_edge": -0.04372
+  },
+  {
+   "key": "cf68da11fa604c13fc9ef3219fad0314|Under 2.5|lean",
+   "type": "lean",
+   "logged_at": "2026-11-21T13:00:48.072228+00:00",
+   "match": "Bournemouth - Nottingham Forest",
+   "kickoff": "2026-11-21T15:00:00Z",
+   "market": "Under 2.5",
+   "open_nordic_odds": 1.8,
+   "open_pinnacle_odds": 1.84,
+   "open_fair_prob": 0.53061,
+   "open_edge": -0.0449,
+   "late": "late",
+   "close_time": "2026-11-21T13:00:48.072228+00:00",
+   "close_nordic_odds": 1.8,
+   "close_pinnacle_odds": 1.84,
+   "close_fair_prob": 0.53061,
+   "close_fair_odds": 1.8846,
+   "close_edge": -0.0449
+  },
+  {
+   "key": "ac6cf70520a83c0949b4003bde53c709|Under 2.5|lean",
+   "type": "lean",
+   "logged_at": "2026-11-21T13:00:48.072228+00:00",
+   "match": "Chelsea - Leeds United",
+   "kickoff": "2026-11-21T15:00:00Z",
+   "market": "Under 2.5",
+   "open_nordic_odds": 1.9,
+   "open_pinnacle_odds": 1.93,
+   "open_fair_prob": 0.50639,
+   "open_edge": -0.03785,
+   "late": "late",
+   "close_time": "2026-11-21T13:00:48.072228+00:00",
+   "close_nordic_odds": 1.9,
+   "close_pinnacle_odds": 1.93,
+   "close_fair_prob": 0.50639,
+   "close_fair_odds": 1.9748,
+   "close_edge": -0.03785
+  },
+  {
+   "key": "9f38413bdad666e2d2dfcc574dd12e66|1X2 Draw|lean",
+   "type": "lean",
+   "logged_at": "2026-11-21T13:00:48.072228+00:00",
+   "match": "Coventry City - Crystal Palace",
+   "kickoff": "2026-11-21T15:00:00Z",
+   "market": "1X2 Draw",
+   "open_nordic_odds": 3.4,
+   "open_pinnacle_odds": 3.4,
+   "open_fair_prob": 0.28708,
+   "open_edge": -0.02393,
+   "late": "late",
+   "close_time": "2026-11-21T13:00:48.072228+00:00",
+   "close_nordic_odds": 3.4,
+   "close_pinnacle_odds": 3.4,
+   "close_fair_prob": 0.28708,
+   "close_fair_odds": 3.4833,
+   "close_edge": -0.02393
+  },
+  {
+   "key": "e67ee3a6f93bb90b8aefcf3dd204477c|1X2 Away|lean",
+   "type": "lean",
+   "logged_at": "2026-11-21T13:00:48.072228+00:00",
+   "match": "Tottenham Hotspur - Ipswich Town",
+   "kickoff": "2026-11-21T15:00:00Z",
+   "market": "1X2 Away",
+   "open_nordic_odds": 6.2,
+   "open_pinnacle_odds": 6.11,
+   "open_fair_prob": 0.15903,
+   "open_edge": -0.01399,
+   "late": "late",
+   "close_time": "2026-11-21T13:00:48.072228+00:00",
+   "close_nordic_odds": 6.2,
+   "close_pinnacle_odds": 6.11,
+   "close_fair_prob": 0.15903,
+   "close_fair_odds": 6.2881,
+   "close_edge": -0.01399
   }
  ],
  "sent": [
@@ -516,6 +611,11 @@
   "lean|b0a4b5448a7e02d9ad1eaa817599fff0",
   "digest|2026-11-08T16:30:00Z",
   "lean|6ef39b0fd8839f6e93a3de32523e9807",
-  "digest|2026-11-21T12:30:00Z"
+  "digest|2026-11-21T12:30:00Z",
+  "lean|b8d6ab6ecc8bb356c6335d3f417d0ecf",
+  "lean|cf68da11fa604c13fc9ef3219fad0314",
+  "lean|ac6cf70520a83c0949b4003bde53c709",
+  "lean|9f38413bdad666e2d2dfcc574dd12e66",
+  "lean|e67ee3a6f93bb90b8aefcf3dd204477c"
  ]
 }
