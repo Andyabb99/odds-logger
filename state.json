@@ -84,9 +84,9 @@
  ],
  "events_at": "2026-11-27T17:30:39.506257+00:00",
  "month": "2026-11",
- "calls": 57,
- "last_poll": "2026-11-27T18:30:39.673750+00:00",
- "remaining": 386,
+ "calls": 58,
+ "last_poll": "2026-11-27T19:00:49.887336+00:00",
+ "remaining": 384,
  "bets": [
   {
    "key": "6a3819cdbe2ba2fe5a3d8f9b4b459965|1X2 Draw|lean",
@@ -579,6 +579,25 @@
    "close_fair_prob": 0.15903,
    "close_fair_odds": 6.2881,
    "close_edge": -0.01399
+  },
+  {
+   "key": "40d95e660c301c2d8a5a7a6317017b65|1X2 Home|lean",
+   "type": "lean",
+   "logged_at": "2026-11-27T19:00:49.887336+00:00",
+   "match": "Nottingham Forest - Chelsea",
+   "kickoff": "2026-11-27T20:00:00Z",
+   "market": "1X2 Home",
+   "open_nordic_odds": 2.45,
+   "open_pinnacle_odds": 2.47,
+   "open_fair_prob": 0.39387,
+   "open_edge": -0.03501,
+   "late": "",
+   "close_time": "2026-11-27T19:00:49.887336+00:00",
+   "close_nordic_odds": 2.45,
+   "close_pinnacle_odds": 2.47,
+   "close_fair_prob": 0.39387,
+   "close_fair_odds": 2.5389,
+   "close_edge": -0.03501
   }
  ],
  "sent": [
@@ -616,6 +635,8 @@
   "lean|cf68da11fa604c13fc9ef3219fad0314",
   "lean|ac6cf70520a83c0949b4003bde53c709",
   "lean|9f38413bdad666e2d2dfcc574dd12e66",
-  "lean|e67ee3a6f93bb90b8aefcf3dd204477c"
+  "lean|e67ee3a6f93bb90b8aefcf3dd204477c",
+  "lean|40d95e660c301c2d8a5a7a6317017b65",
+  "digest|2026-11-27T20:00:00Z"
  ]
 }
