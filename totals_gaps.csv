@@ -307,3 +307,11 @@ time,event_id,match,kickoff,mins_to_kickoff,missing,book,point,outcome,price
 2026-11-28T13:00:48.540890+00:00,0bc17a3c7d8153e72b94688960cc603a,Leeds United - Coventry City,2026-11-28T15:00:00Z,119,pinnacle,pinnacle,2.75,Under,1.91
 2026-11-28T13:00:48.540890+00:00,0bc17a3c7d8153e72b94688960cc603a,Leeds United - Coventry City,2026-11-28T15:00:00Z,119,pinnacle,nordicbet,2.5,Over,1.75
 2026-11-28T13:00:48.540890+00:00,0bc17a3c7d8153e72b94688960cc603a,Leeds United - Coventry City,2026-11-28T15:00:00Z,119,pinnacle,nordicbet,2.5,Under,2.08
+2026-11-28T13:30:36.794255+00:00,ab87184803a63f7b679f1d12b01c3271,Manchester United - Brentford,2026-11-28T15:00:00Z,89,pinnacle,pinnacle,3.0,Over,1.91
+2026-11-28T13:30:36.794255+00:00,ab87184803a63f7b679f1d12b01c3271,Manchester United - Brentford,2026-11-28T15:00:00Z,89,pinnacle,pinnacle,3.0,Under,2.0
+2026-11-28T13:30:36.794255+00:00,ab87184803a63f7b679f1d12b01c3271,Manchester United - Brentford,2026-11-28T15:00:00Z,89,pinnacle,nordicbet,2.5,Over,1.55
+2026-11-28T13:30:36.794255+00:00,ab87184803a63f7b679f1d12b01c3271,Manchester United - Brentford,2026-11-28T15:00:00Z,89,pinnacle,nordicbet,2.5,Under,2.5
+2026-11-28T13:30:36.794255+00:00,0bc17a3c7d8153e72b94688960cc603a,Leeds United - Coventry City,2026-11-28T15:00:00Z,89,pinnacle,pinnacle,2.75,Over,2.0
+2026-11-28T13:30:36.794255+00:00,0bc17a3c7d8153e72b94688960cc603a,Leeds United - Coventry City,2026-11-28T15:00:00Z,89,pinnacle,pinnacle,2.75,Under,1.91
+2026-11-28T13:30:36.794255+00:00,0bc17a3c7d8153e72b94688960cc603a,Leeds United - Coventry City,2026-11-28T15:00:00Z,89,pinnacle,nordicbet,2.5,Over,1.8
+2026-11-28T13:30:36.794255+00:00,0bc17a3c7d8153e72b94688960cc603a,Leeds United - Coventry City,2026-11-28T15:00:00Z,89,pinnacle,nordicbet,2.5,Under,2.02

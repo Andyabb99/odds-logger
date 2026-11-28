@@ -80,9 +80,9 @@
  ],
  "events_at": "2026-11-28T12:00:54.108112+00:00",
  "month": "2026-11",
- "calls": 62,
- "last_poll": "2026-11-28T13:00:48.540890+00:00",
- "remaining": 376,
+ "calls": 63,
+ "last_poll": "2026-11-28T13:30:36.794255+00:00",
+ "remaining": 374,
  "bets": [
   {
    "key": "6a3819cdbe2ba2fe5a3d8f9b4b459965|1X2 Draw|lean",
