@@ -80,9 +80,9 @@
  ],
  "events_at": "2026-11-28T12:00:54.108112+00:00",
  "month": "2026-11",
- "calls": 68,
- "last_poll": "2026-11-28T16:00:46.189514+00:00",
- "remaining": 364,
+ "calls": 69,
+ "last_poll": "2026-11-28T16:30:35.872404+00:00",
+ "remaining": 362,
  "bets": [
   {
    "key": "6a3819cdbe2ba2fe5a3d8f9b4b459965|1X2 Draw|lean",
@@ -632,6 +632,25 @@
    "close_fair_prob": 0.13217,
    "close_fair_odds": 7.5662,
    "close_edge": -0.06162
+  },
+  {
+   "key": "9d23f6ad21946dd258869ebc22236cf0|1X2 Away|lean",
+   "type": "lean",
+   "logged_at": "2026-11-28T16:30:35.872404+00:00",
+   "match": "Ipswich Town - Aston Villa",
+   "kickoff": "2026-11-28T17:30:00Z",
+   "market": "1X2 Away",
+   "open_nordic_odds": 2.05,
+   "open_pinnacle_odds": 2.06,
+   "open_fair_prob": 0.47324,
+   "open_edge": -0.02985,
+   "late": "",
+   "close_time": "2026-11-28T16:30:35.872404+00:00",
+   "close_nordic_odds": 2.05,
+   "close_pinnacle_odds": 2.06,
+   "close_fair_prob": 0.47324,
+   "close_fair_odds": 2.1131,
+   "close_edge": -0.02985
   }
  ],
  "sent": [
@@ -674,6 +693,8 @@
   "digest|2026-11-27T20:00:00Z",
   "lean|ab87184803a63f7b679f1d12b01c3271",
   "lean|0bc17a3c7d8153e72b94688960cc603a",
-  "digest|2026-11-28T15:00:00Z"
+  "digest|2026-11-28T15:00:00Z",
+  "lean|9d23f6ad21946dd258869ebc22236cf0",
+  "digest|2026-11-28T17:30:00Z"
  ]
 }
