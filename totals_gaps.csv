@@ -283,3 +283,11 @@ time,event_id,match,kickoff,mins_to_kickoff,missing,book,point,outcome,price
 2026-11-27T19:30:38.468748+00:00,40d95e660c301c2d8a5a7a6317017b65,Nottingham Forest - Chelsea,2026-11-27T20:00:00Z,29,pinnacle,pinnacle,2.75,Under,1.87
 2026-11-27T19:30:38.468748+00:00,40d95e660c301c2d8a5a7a6317017b65,Nottingham Forest - Chelsea,2026-11-27T20:00:00Z,29,pinnacle,nordicbet,2.5,Over,1.78
 2026-11-27T19:30:38.468748+00:00,40d95e660c301c2d8a5a7a6317017b65,Nottingham Forest - Chelsea,2026-11-27T20:00:00Z,29,pinnacle,nordicbet,2.5,Under,2.02
+2026-11-28T12:00:54.108112+00:00,ab87184803a63f7b679f1d12b01c3271,Manchester United - Brentford,2026-11-28T15:00:00Z,179,pinnacle,pinnacle,3.0,Over,1.92
+2026-11-28T12:00:54.108112+00:00,ab87184803a63f7b679f1d12b01c3271,Manchester United - Brentford,2026-11-28T15:00:00Z,179,pinnacle,pinnacle,3.0,Under,1.99
+2026-11-28T12:00:54.108112+00:00,ab87184803a63f7b679f1d12b01c3271,Manchester United - Brentford,2026-11-28T15:00:00Z,179,pinnacle,nordicbet,2.5,Over,1.55
+2026-11-28T12:00:54.108112+00:00,ab87184803a63f7b679f1d12b01c3271,Manchester United - Brentford,2026-11-28T15:00:00Z,179,pinnacle,nordicbet,2.5,Under,2.45
+2026-11-28T12:00:54.108112+00:00,0bc17a3c7d8153e72b94688960cc603a,Leeds United - Coventry City,2026-11-28T15:00:00Z,179,pinnacle,pinnacle,2.75,Over,1.94
+2026-11-28T12:00:54.108112+00:00,0bc17a3c7d8153e72b94688960cc603a,Leeds United - Coventry City,2026-11-28T15:00:00Z,179,pinnacle,pinnacle,2.75,Under,1.96
+2026-11-28T12:00:54.108112+00:00,0bc17a3c7d8153e72b94688960cc603a,Leeds United - Coventry City,2026-11-28T15:00:00Z,179,pinnacle,nordicbet,2.5,Over,1.7
+2026-11-28T12:00:54.108112+00:00,0bc17a3c7d8153e72b94688960cc603a,Leeds United - Coventry City,2026-11-28T15:00:00Z,179,pinnacle,nordicbet,2.5,Under,2.15
